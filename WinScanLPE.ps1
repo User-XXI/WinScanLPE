@@ -4,6 +4,7 @@ $Sleep = 1
 $SleepInBlock = 0
 #$Privileges = "admin"
 
+
  # Privilege check
  function CheckAdmin{
     $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
@@ -357,7 +358,8 @@ function HotFixes {
     Start-Sleep -seconds $Sleep
 }
 
-function NETVersion{
+function NETVersion
+{
     Write-Host "[*] .NETVersion test Started" -ForegroundColor black -BackgroundColor white
     Write-Host "`t[?] Installed .NET Framework versions: " -ForegroundColor Yellow
 
@@ -390,6 +392,7 @@ function PSVersion{
 
 function SystemRole{
     [int]$systemRoleID = $(get-wmiObject -Class Win32_ComputerSystem).DomainRole
+    #$RoleIDflag = $False
     $systemRoles = @{
                     0 = " Standalone Workstation    " ;
                     1 = " Member Workstation        " ;
@@ -477,7 +480,8 @@ function PathCheck{
     Write-Host "`t[+] Path Check Completed`n" -ForegroundColor Green
 }
 
-function FindSpooler{
+function FindSpooler
+{
     Write-Host "[?] Spooler test Started" -ForegroundColor black -BackgroundColor white
 
     if((Get-Service -Name Spooler | Where-Object -Property Status -eq -Value 'running')){ 
@@ -504,9 +508,14 @@ function FindSpooler{
 }
 
 
+$arrayargs = [System.Collections.ArrayList]::new()
+if($args.Count -gt 0){
+    for($count = 0; $args.Count -gt $count; $count++){
+        [void]$arrayargs.Add( $args[$count] )
+    }
+}
 
-# Аргументы командной строки
-if('all [1 - 7]' -in $NewArrayArgs){
+if('all' -in $ArrayArgs){
     Write-Host "The program is running in full test mode, all tests will be performed"
 
     CheckAdmin
@@ -554,9 +563,8 @@ if('all [1 - 7]' -in $NewArrayArgs){
     PathCheck
     FindSpooler
 }
-
 else{
-    if('Info [8 - 17]' -in $NewArrayArgs){
+    if('Info' -in $ArrayArgs){
         Write-Host "[*] System Information:`n`n" -ForegroundColor black -BackgroundColor white
 
         CheckAdmin
@@ -570,7 +578,7 @@ else{
         AuditSettings
     }
     
-    if('Network [18 - 20]' -in $NewArrayArgs){
+    if('Network' -in $ArrayArgs){
         Write-Host "[*] Network Information:`n`n" -ForegroundColor black -BackgroundColor white
 
         NetInfo
@@ -578,7 +586,7 @@ else{
         Firewall
     }
     
-    if('Users [21 - 30]' -in $NewArrayArgs){
+    if('Users' -in $ArrayArgs){
     Write-Host "[*] Users Information:`n`n" -ForegroundColor black -BackgroundColor white
 
     LoggedUsers
@@ -593,7 +601,7 @@ else{
     SAMBackupFiles
     }
     
-    if('Software [31 - 33]' -in $NewArrayArgs){
+    if('Software' -in $ArrayArgs){
     Write-Host "[*] Software Information:`n`n" -ForegroundColor black -BackgroundColor white
 
     InstalledSoftwareDir
@@ -601,7 +609,7 @@ else{
     UnqServPaths
     }
     
-    if('FPermissions [34 - 36]' -in $NewArrayArgs){
+    if('FPermissions' -in $ArrayArgs){
         Write-Host "[*] Forgotten Permissions Information:`n`n" -ForegroundColor black -BackgroundColor white
 
         AlwaysInstallElevated
@@ -609,7 +617,7 @@ else{
         BUILTIN
     }
     
-    if('Tasks [37 - 39]' -in $NewArrayArgs){
+    if('Tasks' -in $ArrayArgs){
     Write-Host "[*] Tasks Information:`n`n" -ForegroundColor black -BackgroundColor white
 
     StartupCommands
@@ -617,7 +625,7 @@ else{
     TasksFolder
     }
     
-    if('Other [40 - 44]' -in $NewArrayArgs){
+    if('Other' -in $ArrayArgs){
         RunningProcesses
         HotFixes
         Antivirus
@@ -625,77 +633,292 @@ else{
         FindSpooler
     }
     
-    if( 'CheckAdmin' -in $NewArrayArgs ){ CheckAdmin }
+    if( 'CheckAdmin' -in $ArrayArgs ){ CheckAdmin }
 
-    if( 'SysInfo' -in $NewArrayArgs ){ SysInfo }
+    if( 'SysInfo' -in $ArrayArgs ){ SysInfo }
     
-    if( 'MountedDisks' -in $NewArrayArgs ){ MountedDisks }
+    if( 'MountedDisks' -in $ArrayArgs ){ MountedDisks }
     
-    if( 'SystemDate' -in $NewArrayArgs ){ SystemDate }
+    if( 'SystemDate' -in $ArrayArgs ){ SystemDate }
     
-    if( 'NETVersion' -in $NewArrayArgs ){ NETVersion }
+    if( 'NETVersion' -in $ArrayArgs ){ NETVersion }
     
-    if( 'PSVersion' -in $NewArrayArgs ){ PSVersion }
+    if( 'PSVersion' -in $ArrayArgs ){ PSVersion }
     
-    if( 'SystemRole' -in $NewArrayArgs ){ SystemRole }
+    if( 'SystemRole' -in $ArrayArgs ){ SystemRole }
     
-    if( 'ProxyDetect' -in $NewArrayArgs ){ ProxyDetect }
+    if( 'ProxyDetect' -in $ArrayArgs ){ ProxyDetect }
     
-    if( 'AuditSettings' -in $NewArrayArgs ){ AuditSettings }
+    if( 'AuditSettings' -in $ArrayArgs ){ AuditSettings }
     
-    if( 'EnvVariables' -in $NewArrayArgs ){ EnvVariables }
+    if( 'EnvVariables' -in $ArrayArgs ){ EnvVariables }
     
-    if( 'NetInfo' -in $NewArrayArgs ){ NetInfo }
+    if( 'NetInfo' -in $ArrayArgs ){ NetInfo }
     
-    if( 'DNSinfo' -in $NewArrayArgs ){ DNSinfo }
+    if( 'DNSinfo' -in $ArrayArgs ){ DNSinfo }
     
-    if( 'Firewall' -in $NewArrayArgs ){ Firewall }
+    if( 'Firewall' -in $ArrayArgs ){ Firewall }
     
-    if( 'LoggedUsers' -in $NewArrayArgs ){ LoggedUsers }
+    if( 'LoggedUsers' -in $ArrayArgs ){ LoggedUsers }
     
-    if( 'CurrentUser' -in $NewArrayArgs ){ CurrentUser }
+    if( 'CurrentUser' -in $ArrayArgs ){ CurrentUser }
     
-    if( 'UserPrivileges' -in $NewArrayArgs ){ UserPrivileges }
+    if( 'UserPrivileges' -in $ArrayArgs ){ UserPrivileges }
     
-    if( 'LocalUsers' -in $NewArrayArgs ){ LocalUsers }
+    if( 'LocalUsers' -in $ArrayArgs ){ LocalUsers }
     
-    if( 'LocalGroups' -in $NewArrayArgs ){ LocalGroups }
+    if( 'LocalGroups' -in $ArrayArgs ){ LocalGroups }
     
-    if( 'LocalAdmin' -in $NewArrayArgs ){ LocalAdmin }
+    if( 'LocalAdmin' -in $ArrayArgs ){ LocalAdmin }
     
-    if( 'AutoLogon' -in $NewArrayArgs ){ AutoLogon }
+    if( 'AutoLogon' -in $ArrayArgs ){ AutoLogon }
     
-    if( 'UserDirectories' -in $NewArrayArgs ){ UserDirectories }
+    if( 'UserDirectories' -in $ArrayArgs ){ UserDirectories }
     
-    if( 'Cred' -in $NewArrayArgs ){ Cred }
+    if( 'Cred' -in $ArrayArgs ){ Cred }
     
-    if( 'SAMBackupFiles' -in $NewArrayArgs ){ SAMBackupFiles }
+    if( 'SAMBackupFiles' -in $ArrayArgs ){ SAMBackupFiles }
     
-    if( 'RunningProcesses' -in $NewArrayArgs ){ RunningProcesses }
+    if( 'RunningProcesses' -in $ArrayArgs ){ RunningProcesses }
     
-    if( 'InstalledSoftwareDir' -in $NewArrayArgs ){ InstalledSoftwareDir }
+    if( 'InstalledSoftwareDir' -in $ArrayArgs ){ InstalledSoftwareDir }
     
-    if( 'RegSoftware' -in $NewArrayArgs ){ RegSoftware }
+    if( 'RegSoftware' -in $ArrayArgs ){ RegSoftware }
     
-    if( 'UnqServPaths' -in $NewArrayArgs ){ UnqServPaths }
+    if( 'UnqServPaths' -in $ArrayArgs ){ UnqServPaths }
     
-    if( 'AlwaysInstallElevated' -in $NewArrayArgs ){ AlwaysInstallElevated }
+    if( 'AlwaysInstallElevated' -in $ArrayArgs ){ AlwaysInstallElevated }
     
-    if( 'EveryonePermissions' -in $NewArrayArgs ){ EveryonePermissions }
+    if( 'EveryonePermissions' -in $ArrayArgs ){ EveryonePermissions }
     
-    if( 'BUILTIN' -in $NewArrayArgs ){ BUILTIN }
+    if( 'BUILTIN' -in $ArrayArgs ){ BUILTIN }
     
-    if( 'StartupCommands' -in $NewArrayArgs ){ StartupCommands }
+    if( 'StartupCommands' -in $ArrayArgs ){ StartupCommands }
     
-    if( 'ScheduledTasks' -in $NewArrayArgs ){ ScheduledTasks }
+    if( 'ScheduledTasks' -in $ArrayArgs ){ ScheduledTasks }
     
-    if( 'TasksFolder' -in $NewArrayArgs ){ TasksFolder }
+    if( 'TasksFolder' -in $ArrayArgs ){ TasksFolder }
     
-    if( 'HotFixes' -in $NewArrayArgs ){ HotFixes }
+    if( 'HotFixes' -in $ArrayArgs ){ HotFixes }
     
-    if( 'Antivirus' -in $NewArrayArgs ){ Antivirus }
+    if( 'Antivirus' -in $ArrayArgs ){ Antivirus }
     
-    if( 'PathCheck' -in $NewArrayArgs ){ PathCheck }
+    if( 'PathCheck' -in $ArrayArgs ){ PathCheck }
     
-    if( 'FindSpooler' -in $NewArrayArgs ){ FindSpooler }    
+    if( 'FindSpooler' -in $ArrayArgs ){ FindSpooler }    
 }
+
+if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $ArrayArgs))){
+    $AllArgs = @('all [1 - 7]', 'Info [8 - 17]', 'Network [18 - 20]', 'Users [21 - 30]', 
+                 'Software [31 - 33]', 'FPermissions [34 - 36]', 'Tasks [37 - 39]', 'Other [40 - 44]', 
+                 'CheckAdmin', 'SysInfo', 'MountedDisks', 'SystemDate', 'NETVersion', 
+                 'PSVersion', 'SystemRole', 'ProxyDetect', 'AuditSettings', 'EnvVariables', 
+                 'NetInfo', 'DNSinfo', 'Firewall', 'LoggedUsers', 'CurrentUser', 
+                 'UserPrivileges', 'LocalUsers', 'LocalGroups', 'LocalAdmin', 'AutoLogon', 
+                 'UserDirectories', 'Cred', 'SAMBackupFiles', 'InstalledSoftwareDir', 
+                 'RegSoftware', 'UnqServPaths', 'AlwaysInstallElevated', 'EveryonePermissions', 'BUILTIN', 
+                 'StartupCommands', 'ScheduledTasks', 'TasksFolder', 'RunningProcesses', 'HotFixes', 'Antivirus', 
+                 'PathCheck', 'FindSpooler')
+    ForEach($Modes in $AllArgs){
+    $ModeIndex = [array]::IndexOf($AllArgs, $Modes)
+    Write-Host "  " $ModeIndex $Modes
+    }
+    $arrayInput = Read-Host "Select the mode(s) separated by a space"
+    $arrayInput = $arrayInput.Split(' ')
+    foreach($element in $arrayInput){ $NewArrayArgs += $AllArgs[$element] }
+
+    if('all [1 - 7]' -in $NewArrayArgs){
+        Write-Host "The program is running in full test mode, all tests will be performed"
+
+        CheckAdmin
+        SysInfo
+        MountedDisks
+        SystemDate
+        NETVersion
+        PSVersion
+        SystemRole
+        ProxyDetect
+        AuditSettings
+        EnvVariables
+
+        NetInfo
+        DNSinfo
+        Firewall
+
+        LoggedUsers
+        CurrentUser
+        UserPrivileges
+        LocalUsers
+        LocalGroups
+        LocalAdmin
+        AutoLogon
+        UserDirectories
+        Cred
+        SAMBackupFiles
+
+        RunningProcesses
+
+        InstalledSoftwareDir
+        RegSoftware
+        UnqServPaths
+
+        AlwaysInstallElevated
+        EveryonePermissions
+        BUILTIN
+
+        StartupCommands
+        ScheduledTasks
+        TasksFolder
+
+        HotFixes
+        Antivirus
+        PathCheck
+        FindSpooler
+    }
+    else{
+        if('Info [8 - 17]' -in $NewArrayArgs){
+            Write-Host "[*] System Information:`n`n" -ForegroundColor black -BackgroundColor white
+
+            CheckAdmin
+            SysInfo
+            MountedDisks
+            SystemDate
+            NETVersion
+            PSVersion
+            SystemRole
+            ProxyDetect
+            AuditSettings
+        }
+        
+        if('Network [18 - 20]' -in $NewArrayArgs){
+            Write-Host "[*] Network Information:`n`n" -ForegroundColor black -BackgroundColor white
+
+            NetInfo
+            DNSinfo
+            Firewall
+        }
+        
+        if('Users [21 - 30]' -in $NewArrayArgs){
+        Write-Host "[*] Users Information:`n`n" -ForegroundColor black -BackgroundColor white
+
+        LoggedUsers
+        CurrentUser
+        UserPrivileges
+        LocalUsers
+        LocalGroups
+        LocalAdmin
+        AutoLogon
+        UserDirectories
+        Cred
+        SAMBackupFiles
+        }
+        
+        if('Software [31 - 33]' -in $NewArrayArgs){
+        Write-Host "[*] Software Information:`n`n" -ForegroundColor black -BackgroundColor white
+
+        InstalledSoftwareDir
+        RegSoftware
+        UnqServPaths
+        }
+        
+        if('FPermissions [34 - 36]' -in $NewArrayArgs){
+            Write-Host "[*] Forgotten Permissions Information:`n`n" -ForegroundColor black -BackgroundColor white
+
+            AlwaysInstallElevated
+            EveryonePermissions
+            BUILTIN
+        }
+        
+        if('Tasks [37 - 39]' -in $NewArrayArgs){
+        Write-Host "[*] Tasks Information:`n`n" -ForegroundColor black -BackgroundColor white
+
+        StartupCommands
+        ScheduledTasks
+        TasksFolder
+        }
+        
+        if('Other [40 - 44]' -in $NewArrayArgs){
+            RunningProcesses
+            HotFixes
+            Antivirus
+            PathCheck
+            FindSpooler
+        }
+        
+        if( 'CheckAdmin' -in $NewArrayArgs ){ CheckAdmin }
+
+        if( 'SysInfo' -in $NewArrayArgs ){ SysInfo }
+        
+        if( 'MountedDisks' -in $NewArrayArgs ){ MountedDisks }
+        
+        if( 'SystemDate' -in $NewArrayArgs ){ SystemDate }
+        
+        if( 'NETVersion' -in $NewArrayArgs ){ NETVersion }
+        
+        if( 'PSVersion' -in $NewArrayArgs ){ PSVersion }
+        
+        if( 'SystemRole' -in $NewArrayArgs ){ SystemRole }
+        
+        if( 'ProxyDetect' -in $NewArrayArgs ){ ProxyDetect }
+        
+        if( 'AuditSettings' -in $NewArrayArgs ){ AuditSettings }
+        
+        if( 'EnvVariables' -in $NewArrayArgs ){ EnvVariables }
+        
+        if( 'NetInfo' -in $NewArrayArgs ){ NetInfo }
+        
+        if( 'DNSinfo' -in $NewArrayArgs ){ DNSinfo }
+        
+        if( 'Firewall' -in $NewArrayArgs ){ Firewall }
+        
+        if( 'LoggedUsers' -in $NewArrayArgs ){ LoggedUsers }
+        
+        if( 'CurrentUser' -in $NewArrayArgs ){ CurrentUser }
+        
+        if( 'UserPrivileges' -in $NewArrayArgs ){ UserPrivileges }
+        
+        if( 'LocalUsers' -in $NewArrayArgs ){ LocalUsers }
+        
+        if( 'LocalGroups' -in $NewArrayArgs ){ LocalGroups }
+        
+        if( 'LocalAdmin' -in $NewArrayArgs ){ LocalAdmin }
+        
+        if( 'AutoLogon' -in $NewArrayArgs ){ AutoLogon }
+        
+        if( 'UserDirectories' -in $NewArrayArgs ){ UserDirectories }
+        
+        if( 'Cred' -in $NewArrayArgs ){ Cred }
+        
+        if( 'SAMBackupFiles' -in $NewArrayArgs ){ SAMBackupFiles }
+        
+        if( 'RunningProcesses' -in $NewArrayArgs ){ RunningProcesses }
+        
+        if( 'InstalledSoftwareDir' -in $NewArrayArgs ){ InstalledSoftwareDir }
+        
+        if( 'RegSoftware' -in $NewArrayArgs ){ RegSoftware }
+        
+        if( 'UnqServPaths' -in $NewArrayArgs ){ UnqServPaths }
+        
+        if( 'AlwaysInstallElevated' -in $NewArrayArgs ){ AlwaysInstallElevated }
+        
+        if( 'EveryonePermissions' -in $NewArrayArgs ){ EveryonePermissions }
+        
+        if( 'BUILTIN' -in $NewArrayArgs ){ BUILTIN }
+        
+        if( 'StartupCommands' -in $NewArrayArgs ){ StartupCommands }
+        
+        if( 'ScheduledTasks' -in $NewArrayArgs ){ ScheduledTasks }
+        
+        if( 'TasksFolder' -in $NewArrayArgs ){ TasksFolder }
+        
+        if( 'HotFixes' -in $NewArrayArgs ){ HotFixes }
+        
+        if( 'Antivirus' -in $NewArrayArgs ){ Antivirus }
+        
+        if( 'PathCheck' -in $NewArrayArgs ){ PathCheck }
+        
+        if( 'FindSpooler' -in $NewArrayArgs ){ FindSpooler }    
+    }
+}
+
+Write-Host "`t[?] Finish" -ForegroundColor black -BackgroundColor white
