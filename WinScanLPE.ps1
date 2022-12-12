@@ -1,18 +1,19 @@
+$arrayargs = [System.Collections.ArrayList]::new()
 $Privileges = $null
 $Sleep = 1
 $SleepInBlock = 0
+
+if($args.Count -gt 0){
+    for($count = 0; $args.Count -gt $count; $count++){
+        [void]$arrayargs.Add( $args[$count] )
+    }
+}
 
  # Privilege check
  function CheckAdmin{
     $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
     $isAdmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator) 
     Start-Sleep -seconds $SleepInBlock
-
-    if(($Privileges -eq "admin") -and ($isAdmin -eq [bool]$False)){
-        $isAdmin = [bool]$True
-        Start-Sleep -seconds $SleepInBlock
-        Elevated
-    }
 
     if($isAdmin -eq [bool]$True){
         $Privileges = "Administrator"
@@ -25,20 +26,6 @@ $SleepInBlock = 0
 
     Write-Host "`n===== Access level is: $Privileges =====`n`n`n" -ForegroundColor Yellow
     Start-Sleep -seconds $Sleep
-}
-
-# Privilege Escalation
-function Elevated {
-    $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
-    $isAdmin = $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator) 
-    if($isAdmin -eq [bool]$True){}
-    else{
-        $newProcess = New-Object System.Diagnostics.ProcessStartInfo "PowerShell"
-        $newProcess.Arguments = "& '" + $script:MyInvocation.MyCommand.Path + $arrayargs + "'"
-        $newProcess.Verb = "runas"
-        [System.Diagnostics.Process]::Start($newProcess)
-        Exit 
-    }
 }
 
 function SysInfo{
@@ -144,11 +131,11 @@ function LocalAdmin{
         Get-LocalGroupMember Administrators | Format-Table Name, PrincipalSource
     }
     else{
-        Write-Host ""`t[!] The language of the system differs from "ru" and "en", there may be errors in identifying users with administrator privileges`n`n"" -ForegroundColor Red
+        Write-Host ""`t[!] The language of the system differs from "ru" and "en", there may be errors in identifying users with Administrator privileges`n`n"" -ForegroundColor Red
         Start-Sleep -seconds $SleepInBlock
         Get-LocalGroupMember Administrators | Format-Table Name, PrincipalSource
     }
-    Write-Host "`t[?] Check the list of users with administrator privileges`n`n" -ForegroundColor Yellow
+    Write-Host "`t[?] Check the list of users with Administrator privileges`n`n" -ForegroundColor Yellow
     Start-Sleep -seconds $Sleep
 }
 
@@ -502,14 +489,6 @@ function FindSpooler{
     }
 }
 
-
-$arrayargs = [System.Collections.ArrayList]::new()
-if($args.Count -gt 0){
-    for($count = 0; $args.Count -gt $count; $count++){
-        [void]$arrayargs.Add( $args[$count] )
-    }
-}
-
 if('all' -in $ArrayArgs){
     Write-Host "The program is running in full test mode, all tests will be performed"
 
@@ -703,10 +682,10 @@ else{
     if( 'FindSpooler' -in $ArrayArgs ){ FindSpooler }    
 }
 
-if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $ArrayArgs))){
+if($ArrayArgs.Count -eq 0){
     $NewArrayArgs = [System.Collections.ArrayList]::new()
-    $AllArgs = @('all [1 - 7]', 'Info [8 - 17]', 'Network [18 - 20]', 'Users [21 - 30]', 
-                 'Software [31 - 33]', 'FPermissions [34 - 36]', 'Tasks [37 - 39]', 'Other [40 - 44]', 
+    $AllArgs = @('', 'all [2 - 8]', 'Info [9 - 18]', 'Network [19 - 21]', 'Users [22 - 31]', 
+                 'Software [32 - 34]', 'FPermissions [35 - 37]', 'Tasks [38 - 40]', 'Other [41 - 45]', 
                  'CheckAdmin', 'SysInfo', 'MountedDisks', 'SystemDate', 'NETVersion', 
                  'PSVersion', 'SystemRole', 'ProxyDetect', 'AuditSettings', 'EnvVariables', 
                  'NetInfo', 'DNSinfo', 'Firewall', 'LoggedUsers', 'CurrentUser', 
@@ -729,8 +708,7 @@ if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $Arr
         else { } 
     }
 
-
-    if('all [1 - 7]' -in $NewArrayArgs){
+    if('all [2 - 8]' -in $NewArrayArgs){
         Write-Host "The program is running in full test mode, all tests will be performed"
 
         CheckAdmin
@@ -779,7 +757,7 @@ if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $Arr
         FindSpooler
     }
     else{
-        if('Info [8 - 17]' -in $NewArrayArgs){
+        if('Info [9 - 18]' -in $NewArrayArgs){
             Write-Host "[*] System Information:`n`n" -ForegroundColor black -BackgroundColor white
 
             CheckAdmin
@@ -793,7 +771,7 @@ if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $Arr
             AuditSettings
         }
         
-        if('Network [18 - 20]' -in $NewArrayArgs){
+        if('Network [19 - 21]' -in $NewArrayArgs){
             Write-Host "[*] Network Information:`n`n" -ForegroundColor black -BackgroundColor white
 
             NetInfo
@@ -801,7 +779,7 @@ if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $Arr
             Firewall
         }
         
-        if('Users [21 - 30]' -in $NewArrayArgs){
+        if('Users [22 - 31]' -in $NewArrayArgs){
         Write-Host "[*] Users Information:`n`n" -ForegroundColor black -BackgroundColor white
 
         LoggedUsers
@@ -816,7 +794,7 @@ if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $Arr
         SAMBackupFiles
         }
         
-        if('Software [31 - 33]' -in $NewArrayArgs){
+        if('Software [32 - 34]' -in $NewArrayArgs){
         Write-Host "[*] Software Information:`n`n" -ForegroundColor black -BackgroundColor white
 
         InstalledSoftwareDir
@@ -824,7 +802,7 @@ if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $Arr
         UnqServPaths
         }
         
-        if('FPermissions [34 - 36]' -in $NewArrayArgs){
+        if('FPermissions [35 - 37]' -in $NewArrayArgs){
             Write-Host "[*] Forgotten Permissions Information:`n`n" -ForegroundColor black -BackgroundColor white
 
             AlwaysInstallElevated
@@ -832,7 +810,7 @@ if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $Arr
             BUILTIN
         }
         
-        if('Tasks [37 - 39]' -in $NewArrayArgs){
+        if('Tasks [38 - 40]' -in $NewArrayArgs){
         Write-Host "[*] Tasks Information:`n`n" -ForegroundColor black -BackgroundColor white
 
         StartupCommands
@@ -840,7 +818,7 @@ if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $Arr
         TasksFolder
         }
         
-        if('Other [40 - 44]' -in $NewArrayArgs){
+        if('Other [41 - 45]' -in $NewArrayArgs){
             RunningProcesses
             HotFixes
             Antivirus
@@ -925,3 +903,4 @@ if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $Arr
 }
 
 Write-Host "`t[?] Finish" -ForegroundColor black -BackgroundColor white
+sleep 5
