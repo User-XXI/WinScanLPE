@@ -1,9 +1,6 @@
-
 $Privileges = $null
 $Sleep = 1
 $SleepInBlock = 0
-#$Privileges = "admin"
-
 
  # Privilege check
  function CheckAdmin{
@@ -718,13 +715,20 @@ if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $Arr
                  'RegSoftware', 'UnqServPaths', 'AlwaysInstallElevated', 'EveryonePermissions', 'BUILTIN', 
                  'StartupCommands', 'ScheduledTasks', 'TasksFolder', 'RunningProcesses', 'HotFixes', 'Antivirus', 
                  'PathCheck', 'FindSpooler')
+    
     ForEach($Modes in $AllArgs){
     $ModeIndex = [array]::IndexOf($AllArgs, $Modes)
     Write-Host "  " $ModeIndex $Modes
     }
+
     $arrayInput = Read-Host "Select the mode(s) separated by a space"
     $arrayInput = $arrayInput.Split(' ')
-    foreach($element in $arrayInput){ $NewArrayArgs += $AllArgs[$element] }
+    
+    foreach($element in $arrayInput){ 
+        if(([int]$element -le ($AllArgs.Count - 1)) -and ([int]$element -ge 0)) { $NewArrayArgs += $AllArgs[$element] }
+        else { } 
+    }
+
 
     if('all [1 - 7]' -in $NewArrayArgs){
         Write-Host "The program is running in full test mode, all tests will be performed"
