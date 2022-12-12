@@ -293,7 +293,7 @@ function StartupCommands{
     Start-Sleep -seconds $Sleep
 }
 
-function HotFixes {
+function HotFixes{
     Write-Host "[*] HotFixes test Started" -ForegroundColor black -BackgroundColor white
 
     $HFflag = $False
@@ -358,8 +358,7 @@ function HotFixes {
     Start-Sleep -seconds $Sleep
 }
 
-function NETVersion
-{
+function NETVersion{
     Write-Host "[*] .NETVersion test Started" -ForegroundColor black -BackgroundColor white
     Write-Host "`t[?] Installed .NET Framework versions: " -ForegroundColor Yellow
 
@@ -480,8 +479,7 @@ function PathCheck{
     Write-Host "`t[+] Path Check Completed`n" -ForegroundColor Green
 }
 
-function FindSpooler
-{
+function FindSpooler{
     Write-Host "[?] Spooler test Started" -ForegroundColor black -BackgroundColor white
 
     if((Get-Service -Name Spooler | Where-Object -Property Status -eq -Value 'running')){ 
@@ -709,6 +707,7 @@ else{
 }
 
 if(($ArrayArgs.Count -eq 0) -or (($ArrayArgs.Count -eq 1) -and ("admin" -in $ArrayArgs))){
+    $NewArrayArgs = [System.Collections.ArrayList]::new()
     $AllArgs = @('all [1 - 7]', 'Info [8 - 17]', 'Network [18 - 20]', 'Users [21 - 30]', 
                  'Software [31 - 33]', 'FPermissions [34 - 36]', 'Tasks [37 - 39]', 'Other [40 - 44]', 
                  'CheckAdmin', 'SysInfo', 'MountedDisks', 'SystemDate', 'NETVersion', 
