@@ -39,7 +39,7 @@ function SysInfo{
 function SystemDate{
     Write-Host "[*] Date test Started" -ForegroundColor black -BackgroundColor white
     $Date = Get-Date
-    Write-Host "`t[?] $Date" -ForegroundColor Yellow
+    Write-Host "`t[*] $Date" -ForegroundColor Yellow
     Write-Host "`t[?] Check the date and time`n`n" -ForegroundColor Yellow
     Start-Sleep -seconds $Sleep
 }
@@ -81,7 +81,7 @@ function Firewall{
 
 function CurrentUser{
     Write-Host "[*] Get current user..." -ForegroundColor black -BackgroundColor white
-    Write-Host $env:UserDomain\$env:UserName
+    Write-Host "$env:UserDomain\$env:UserName"
     Write-Host "`t[?] Check Current Users`n`n" -ForegroundColor Yellow
     Start-Sleep -seconds $Sleep
 }
@@ -203,7 +203,7 @@ function EveryonePermissions{
         catch { } 
     }| Format-Table
     if($EveryonePermissions -ne $null){
-        Write-Host  $EveryonePermissions
+        Write-Host  "$EveryonePermissions"
         Write-Host "`t[!] Check folders with everyone permissions`n`n" -ForegroundColor Red
     }
     else {
@@ -220,7 +220,7 @@ function BUILTIN{
         catch { } 
     } | Format-Table
     if($BUILTIN -ne $null){
-        Write-Host  $BUILTIN
+        Write-Host  "$BUILTIN"
         Write-Host "`t[!] Check folders with BUILTIN\User permissions`n`n" -ForegroundColor Red
     }
     else {
@@ -406,14 +406,14 @@ function ProxyDetect{
         $proxy = Read-Host -Prompt 'Proxy detected! Proxy is: '$regkey2.GetValue('ProxyServer')'! Does the Powershell-User have proxy rights? (yes/no)'
         if ($proxy -eq "yes" -or $proxy -eq "y" -or $proxy -eq "Yes" -or $proxy -eq "Y")
         {
-            Write-Host -ForegroundColor Yellow 'Setting up Powershell-Session Proxy Credentials...'
+            Write-Host 'Setting up Powershell-Session Proxy Credentials...' -ForegroundColor Yellow
             $Wcl = new-object System.Net.WebClient
             $Wcl.Proxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
             Start-Sleep -seconds $SleepInBlock
         }
         else
         {
-            Write-Host -ForegroundColor Yellow '=== Please enter valid credentials, or the script will fail! ==='
+            Write-Host '=== Please enter valid credentials, or the script will fail! ===' -ForegroundColor Yellow 
             #Proxy Integration manual user
             $webclient = New-Object System.Net.WebClient
             $creds = Get-Credential
@@ -444,9 +444,9 @@ function Antivirus {
     $AntivirusProduct = Get-WmiObject -Namespace "root\SecurityCenter2" -Query $wmiQuery  @psBoundParameters
     [array]$AntivirusNames = $AntivirusProduct.displayName
     Switch($AntivirusNames) {
-        {$AntivirusNames.Count -eq 0}                                {Write-host "`t[!] Anti-Virus is NOT installed!`n`n"        -ForegroundColor Red;    Continue}
-        {$AntivirusNames.Count -eq 1 -and $_ -eq "Windows Defender"} {Write-host "`t[*] ONLY Windows Defender is installed!`n`n" -ForegroundColor Yellow; Continue}
-        {$_ -ne "Windows Defender"}                                  {Write-host "`t[+] Anti-Virus is installed ($_).`n`n"       -ForegroundColor Green}
+        {$AntivirusNames.Count -eq 0}                                {Write-Host "`t[!] Anti-Virus is NOT installed!`n`n"        -ForegroundColor Red;    Continue}
+        {$AntivirusNames.Count -eq 1 -and $_ -eq "Windows Defender"} {Write-Host "`t[*] ONLY Windows Defender is installed!`n`n" -ForegroundColor Yellow; Continue}
+        {$_ -ne "Windows Defender"}                                  {Write-Host "`t[+] Anti-Virus is installed ($_).`n`n"       -ForegroundColor Green}
     }
 }
 
@@ -468,18 +468,18 @@ function FindSpooler{
     Write-Host "[?] Spooler test Started" -ForegroundColor black -BackgroundColor white
 
     if((Get-Service -Name Spooler | Where-Object -Property Status -eq -Value 'running')){ 
-        Write-Host "`t[!] Attention: The print manager may not be secure to this day"  -ForegroundColor Red
-        Write-Host "`t[?] Check out the threat fixes CVE-2021-1675 and CVE-2021-34527" -ForegroundColor Yellow
+        Write-Host "`t[!] Attention: The print manager may not be secure to this day"    -ForegroundColor Red
+        Write-Host "`t[?] Check out the threat fixes CVE-2021-1675 and CVE-2021-34527`n" -ForegroundColor Yellow
         Start-Sleep -seconds $Sleep
 
         Get-Service -Name Spooler | Select-Object Name, Status, CanShutdown, CanStop, DisplayName, StartType | Format-Table
 
         Start-Sleep -seconds $Sleep
-        Write-Host You can disable the Print Spooler service                                                                         -ForegroundColor Yellow
-        Write-Host If disabling the Print Spooler service is appropriate for your enterprise, use the following PowerShell commands: -ForegroundColor Yellow
-        Write-Host "Stop-Service -Name Spooler -Force"                                                                               -ForegroundColor black -BackgroundColor white
-        Write-Host "Set-Service  -Name Spooler -StartupType Disabled"                                                                -ForegroundColor black -BackgroundColor white
-        Write-Host Impact of workaround Disabling the Print Spooler service disables the ability to print both locally and remotely`n. -ForegroundColor Yellow
+        Write-Host "`tYou can disable the Print Spooler service "                                                                          -ForegroundColor Yellow
+        Write-Host "`tIf disabling the Print Spooler service is appropriate for your enterprise, use the following PowerShell commands:"   -ForegroundColor Yellow
+        Write-Host "`tStop-Service -Name Spooler -Force"                                                                                   -ForegroundColor black -BackgroundColor white
+        Write-Host "`tSet-Service  -Name Spooler -StartupType Disabled"                                                                    -ForegroundColor black -BackgroundColor white
+        Write-Host "`tImpact of workaround Disabling the Print Spooler service disables the ability to print both locally and remotely.`n" -ForegroundColor Yellow
         Start-Sleep -seconds $Sleep
     }
     else{
@@ -859,7 +859,7 @@ if($ArrayArgs.Count -eq 0){
         if ( 'PathCheck' -in $NewArrayArgs){ if($LogPath -ne $null) { PathCheck >> $LogPath } else{ PathCheck } }
         if ( 'FindSpooler' -in $NewArrayArgs){ if($LogPath -ne $null) { FindSpooler >> $LogPath } else{ FindSpooler } }   
     }
-    }
+}
 
 Write-Output "`t[?] Finish" -ForegroundColor black -BackgroundColor white >> $LogPath
 Start-Sleep $Sleep
