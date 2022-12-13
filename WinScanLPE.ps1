@@ -1,7 +1,8 @@
 $arrayargs = [System.Collections.ArrayList]::new()
 $Privileges = $null
-$Sleep = 1
+$Sleep = 0
 $SleepInBlock = 0
+$LogPath = $null
 
 if($args.Count -gt 0){
     for($count = 0; $args.Count -gt $count; $count++){
@@ -492,198 +493,189 @@ function FindSpooler{
 if('all' -in $ArrayArgs){
     Write-Host "The program is running in full test mode, all tests will be performed"
 
-    CheckAdmin
-    SysInfo
-    MountedDisks
-    SystemDate
-    NETVersion
-    PSVersion
-    SystemRole
-    ProxyDetect
-    AuditSettings
-    EnvVariables
+    if($LogPath -ne $null) { CheckAdmin >> $LogPath } else{ CheckAdmin }
+    if($LogPath -ne $null) { SysInfo >> $LogPath } else{ SysInfo }
+    if($LogPath -ne $null) { MountedDisks >> $LogPath } else{ MountedDisks }
+    if($LogPath -ne $null) { SystemDate >> $LogPath } else{ SystemDate }
+    if($LogPath -ne $null) { NETVersion >> $LogPath } else{ NETVersion }
+    if($LogPath -ne $null) { PSVersion >> $LogPath } else{ PSVersion }
+    if($LogPath -ne $null) { SystemRole >> $LogPath } else{ SystemRole }
+    if($LogPath -ne $null) { ProxyDetect >> $LogPath } else{ ProxyDetect }
+    if($LogPath -ne $null) { AuditSettings >> $LogPath } else{ AuditSettings }
+    if($LogPath -ne $null) { EnvVariables >> $LogPath } else{ EnvVariables }
 
-    NetInfo
-    DNSinfo
-    Firewall
+    if($LogPath -ne $null) { NetInfo >> $LogPath } else{ NetInfo }
+    if($LogPath -ne $null) { DNSinfo >> $LogPath } else{ DNSinfo }
+    if($LogPath -ne $null) { Firewall >> $LogPath } else{ Firewall }
 
-    LoggedUsers
-    CurrentUser
-    UserPrivileges
-    LocalUsers
-    LocalGroups
-    LocalAdmin
-    AutoLogon
-    UserDirectories
-    Cred
-    SAMBackupFiles
+    if($LogPath -ne $null) { LoggedUsers >> $LogPath } else{ LoggedUsers }
+    if($LogPath -ne $null) { CurrentUser >> $LogPath } else{ CurrentUser }
+    if($LogPath -ne $null) { UserPrivileges >> $LogPath } else{ UserPrivileges }
+    if($LogPath -ne $null) { LocalUsers >> $LogPath } else{ LocalUsers }
+    if($LogPath -ne $null) { LocalGroups >> $LogPath } else{ LocalGroups }
+    if($LogPath -ne $null) { LocalAdmin >> $LogPath } else{ LocalAdmin }
+    if($LogPath -ne $null) { AutoLogon >> $LogPath } else{ AutoLogon }
+    if($LogPath -ne $null) { UserDirectories >> $LogPath } else{ UserDirectories }
+    if($LogPath -ne $null) { Cred >> $LogPath } else{ Cred }
+    if($LogPath -ne $null) { SAMBackupFiles >> $LogPath } else{ SAMBackupFiles }
 
-    RunningProcesses
+    if($LogPath -ne $null) { RunningProcesses >> $LogPath } else{ RunningProcesses }
 
-    InstalledSoftwareDir
-    RegSoftware
-    UnqServPaths
+    if($LogPath -ne $null) { InstalledSoftwareDir >> $LogPath } else{ InstalledSoftwareDir }
+    if($LogPath -ne $null) { RegSoftware >> $LogPath } else{ RegSoftware }
+    if($LogPath -ne $null) { UnqServPaths >> $LogPath } else{ UnqServPaths }
 
-    AlwaysInstallElevated
-    EveryonePermissions
-    BUILTIN
+    if($LogPath -ne $null) { AlwaysInstallElevated >> $LogPath } else{ AlwaysInstallElevated }
+    if($LogPath -ne $null) { EveryonePermissions >> $LogPath } else{ EveryonePermissions }
+    if($LogPath -ne $null) { BUILTIN >> $LogPath } else{ BUILTIN }
 
-    StartupCommands
-    ScheduledTasks
-    TasksFolder
+    if($LogPath -ne $null) { StartupCommands >> $LogPath } else{ StartupCommands }
+    if($LogPath -ne $null) { ScheduledTasks >> $LogPath } else{ ScheduledTasks }
+    if($LogPath -ne $null) { TasksFolder >> $LogPath } else{ TasksFolder }
 
-    HotFixes
-    Antivirus
-    PathCheck
-    FindSpooler
+    if($LogPath -ne $null) { HotFixes >> $LogPath } else{ HotFixes }
+    if($LogPath -ne $null) { Antivirus >> $LogPath } else{ Antivirus }
+    if($LogPath -ne $null) { PathCheck >> $LogPath } else{ PathCheck }
+    if($LogPath -ne $null) { FindSpooler >> $LogPath } else{ FindSpooler }
+
 }
 else{
     if('Info' -in $ArrayArgs){
         Write-Host "[*] System Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-        CheckAdmin
-        SysInfo
-        MountedDisks
-        SystemDate
-        NETVersion
-        PSVersion
-        SystemRole
-        ProxyDetect
-        AuditSettings
+        if($LogPath -ne $null) { CheckAdmin >> $LogPath } else{ CheckAdmin }
+        if($LogPath -ne $null) { SysInfo >> $LogPath } else{ SysInfo }
+        if($LogPath -ne $null) { MountedDisks >> $LogPath } else{ MountedDisks }
+        if($LogPath -ne $null) { SystemDate >> $LogPath } else{ SystemDate }
+        if($LogPath -ne $null) { NETVersion >> $LogPath } else{ NETVersion }
+        if($LogPath -ne $null) { PSVersion >> $LogPath } else{ PSVersion }
+        if($LogPath -ne $null) { SystemRole >> $LogPath } else{ SystemRole }
+        if($LogPath -ne $null) { ProxyDetect >> $LogPath } else{ ProxyDetect }
+        if($LogPath -ne $null) { AuditSettings >> $LogPath } else{ AuditSettings }
+        if($LogPath -ne $null) { EnvVariables >> $LogPath } else{ EnvVariables }
     }
     
     if('Network' -in $ArrayArgs){
         Write-Host "[*] Network Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-        NetInfo
-        DNSinfo
-        Firewall
+        if($LogPath -ne $null) { NetInfo >> $LogPath } else{ NetInfo }
+        if($LogPath -ne $null) { DNSinfo >> $LogPath } else{ DNSinfo }
+        if($LogPath -ne $null) { Firewall >> $LogPath } else{ Firewall }
     }
     
     if('Users' -in $ArrayArgs){
     Write-Host "[*] Users Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-    LoggedUsers
-    CurrentUser
-    UserPrivileges
-    LocalUsers
-    LocalGroups
-    LocalAdmin
-    AutoLogon
-    UserDirectories
-    Cred
-    SAMBackupFiles
+    if($LogPath -ne $null) { LoggedUsers >> $LogPath } else{ LoggedUsers }
+    if($LogPath -ne $null) { CurrentUser >> $LogPath } else{ CurrentUser }
+    if($LogPath -ne $null) { UserPrivileges >> $LogPath } else{ UserPrivileges }
+    if($LogPath -ne $null) { LocalUsers >> $LogPath } else{ LocalUsers }
+    if($LogPath -ne $null) { LocalGroups >> $LogPath } else{ LocalGroups }
+    if($LogPath -ne $null) { LocalAdmin >> $LogPath } else{ LocalAdmin }
+    if($LogPath -ne $null) { AutoLogon >> $LogPath } else{ AutoLogon }
+    if($LogPath -ne $null) { UserDirectories >> $LogPath } else{ UserDirectories }
+    if($LogPath -ne $null) { Cred >> $LogPath } else{ Cred }
+    if($LogPath -ne $null) { SAMBackupFiles >> $LogPath } else{ SAMBackupFiles }
     }
     
     if('Software' -in $ArrayArgs){
     Write-Host "[*] Software Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-    InstalledSoftwareDir
-    RegSoftware
-    UnqServPaths
+    if($LogPath -ne $null) { InstalledSoftwareDir >> $LogPath } else{ InstalledSoftwareDir }
+    if($LogPath -ne $null) { RegSoftware >> $LogPath } else{ RegSoftware }
+    if($LogPath -ne $null) { UnqServPaths >> $LogPath } else{ UnqServPaths }
     }
     
     if('FPermissions' -in $ArrayArgs){
         Write-Host "[*] Forgotten Permissions Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-        AlwaysInstallElevated
-        EveryonePermissions
-        BUILTIN
+        if($LogPath -ne $null) { AlwaysInstallElevated >> $LogPath } else{ AlwaysInstallElevated }
+        if($LogPath -ne $null) { EveryonePermissions >> $LogPath } else{ EveryonePermissions }
+        if($LogPath -ne $null) { BUILTIN >> $LogPath } else{ BUILTIN }
     }
     
     if('Tasks' -in $ArrayArgs){
     Write-Host "[*] Tasks Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-    StartupCommands
-    ScheduledTasks
-    TasksFolder
+    if($LogPath -ne $null) { StartupCommands >> $LogPath } else{ StartupCommands }
+    if($LogPath -ne $null) { ScheduledTasks >> $LogPath } else{ ScheduledTasks }
+    if($LogPath -ne $null) { TasksFolder >> $LogPath } else{ TasksFolder }
     }
     
     if('Other' -in $ArrayArgs){
-        RunningProcesses
-        HotFixes
-        Antivirus
-        PathCheck
-        FindSpooler
+        if($LogPath -ne $null) { HotFixes >> $LogPath } else{ HotFixes }
+        if($LogPath -ne $null) { Antivirus >> $LogPath } else{ Antivirus }
+        if($LogPath -ne $null) { PathCheck >> $LogPath } else{ PathCheck }
+        if($LogPath -ne $null) { FindSpooler >> $LogPath } else{ FindSpooler }
     }
-    
-    if( 'CheckAdmin' -in $ArrayArgs ){ CheckAdmin }
 
-    if( 'SysInfo' -in $ArrayArgs ){ SysInfo }
-    
-    if( 'MountedDisks' -in $ArrayArgs ){ MountedDisks }
-    
-    if( 'SystemDate' -in $ArrayArgs ){ SystemDate }
-    
-    if( 'NETVersion' -in $ArrayArgs ){ NETVersion }
-    
-    if( 'PSVersion' -in $ArrayArgs ){ PSVersion }
-    
-    if( 'SystemRole' -in $ArrayArgs ){ SystemRole }
-    
-    if( 'ProxyDetect' -in $ArrayArgs ){ ProxyDetect }
-    
-    if( 'AuditSettings' -in $ArrayArgs ){ AuditSettings }
-    
-    if( 'EnvVariables' -in $ArrayArgs ){ EnvVariables }
-    
-    if( 'NetInfo' -in $ArrayArgs ){ NetInfo }
-    
-    if( 'DNSinfo' -in $ArrayArgs ){ DNSinfo }
-    
-    if( 'Firewall' -in $ArrayArgs ){ Firewall }
-    
-    if( 'LoggedUsers' -in $ArrayArgs ){ LoggedUsers }
-    
-    if( 'CurrentUser' -in $ArrayArgs ){ CurrentUser }
-    
-    if( 'UserPrivileges' -in $ArrayArgs ){ UserPrivileges }
-    
-    if( 'LocalUsers' -in $ArrayArgs ){ LocalUsers }
-    
-    if( 'LocalGroups' -in $ArrayArgs ){ LocalGroups }
-    
-    if( 'LocalAdmin' -in $ArrayArgs ){ LocalAdmin }
-    
-    if( 'AutoLogon' -in $ArrayArgs ){ AutoLogon }
-    
-    if( 'UserDirectories' -in $ArrayArgs ){ UserDirectories }
-    
-    if( 'Cred' -in $ArrayArgs ){ Cred }
-    
-    if( 'SAMBackupFiles' -in $ArrayArgs ){ SAMBackupFiles }
-    
-    if( 'RunningProcesses' -in $ArrayArgs ){ RunningProcesses }
-    
-    if( 'InstalledSoftwareDir' -in $ArrayArgs ){ InstalledSoftwareDir }
-    
-    if( 'RegSoftware' -in $ArrayArgs ){ RegSoftware }
-    
-    if( 'UnqServPaths' -in $ArrayArgs ){ UnqServPaths }
-    
-    if( 'AlwaysInstallElevated' -in $ArrayArgs ){ AlwaysInstallElevated }
-    
-    if( 'EveryonePermissions' -in $ArrayArgs ){ EveryonePermissions }
-    
-    if( 'BUILTIN' -in $ArrayArgs ){ BUILTIN }
-    
-    if( 'StartupCommands' -in $ArrayArgs ){ StartupCommands }
-    
-    if( 'ScheduledTasks' -in $ArrayArgs ){ ScheduledTasks }
-    
-    if( 'TasksFolder' -in $ArrayArgs ){ TasksFolder }
-    
-    if( 'HotFixes' -in $ArrayArgs ){ HotFixes }
-    
-    if( 'Antivirus' -in $ArrayArgs ){ Antivirus }
-    
-    if( 'PathCheck' -in $ArrayArgs ){ PathCheck }
-    
-    if( 'FindSpooler' -in $ArrayArgs ){ FindSpooler }    
+    if ( 'CheckAdmin' -in $ArrayArgs){ if($LogPath -ne $null) { CheckAdmin >> $LogPath } else{ CheckAdmin } }
+    if ( 'SysInfo' -in $ArrayArgs){ if($LogPath -ne $null) { SysInfo >> $LogPath } else{ SysInfo } }
+    if ( 'MountedDisks' -in $ArrayArgs){ if($LogPath -ne $null) { MountedDisks >> $LogPath } else{ MountedDisks } }
+    if ( 'SystemDate' -in $ArrayArgs){ if($LogPath -ne $null) { SystemDate >> $LogPath } else{ SystemDate } }
+    if ( 'NETVersion' -in $ArrayArgs){ if($LogPath -ne $null) { NETVersion >> $LogPath } else{ NETVersion } }
+    if ( 'PSVersion' -in $ArrayArgs){ if($LogPath -ne $null) { PSVersion >> $LogPath } else{ PSVersion } }
+    if ( 'SystemRole' -in $ArrayArgs){ if($LogPath -ne $null) { SystemRole >> $LogPath } else{ SystemRole } }
+    if ( 'ProxyDetect' -in $ArrayArgs){ if($LogPath -ne $null) { ProxyDetect >> $LogPath } else{ ProxyDetect } }
+    if ( 'AuditSettings' -in $ArrayArgs){ if($LogPath -ne $null) { AuditSettings >> $LogPath } else{ AuditSettings } }
+    if ( 'EnvVariables' -in $ArrayArgs){ if($LogPath -ne $null) { EnvVariables >> $LogPath } else{ EnvVariables } }
+    if ( 'NetInfo' -in $ArrayArgs){ if($LogPath -ne $null) { NetInfo >> $LogPath } else{ NetInfo } }
+    if ( 'DNSinfo' -in $ArrayArgs){ if($LogPath -ne $null) { DNSinfo >> $LogPath } else{ DNSinfo } }
+    if ( 'Firewall' -in $ArrayArgs){ if($LogPath -ne $null) { Firewall >> $LogPath } else{ Firewall } }
+    if ( 'LoggedUsers' -in $ArrayArgs){ if($LogPath -ne $null) { LoggedUsers >> $LogPath } else{ LoggedUsers } }
+    if ( 'CurrentUser' -in $ArrayArgs){ if($LogPath -ne $null) { CurrentUser >> $LogPath } else{ CurrentUser } }
+    if ( 'UserPrivileges' -in $ArrayArgs){ if($LogPath -ne $null) { UserPrivileges >> $LogPath } else{ UserPrivileges } }
+    if ( 'LocalUsers' -in $ArrayArgs){ if($LogPath -ne $null) { LocalUsers >> $LogPath } else{ LocalUsers } }
+    if ( 'LocalGroups' -in $ArrayArgs){ if($LogPath -ne $null) { LocalGroups >> $LogPath } else{ LocalGroups } }
+    if ( 'LocalAdmin' -in $ArrayArgs){ if($LogPath -ne $null) { LocalAdmin >> $LogPath } else{ LocalAdmin } }
+    if ( 'AutoLogon' -in $ArrayArgs){ if($LogPath -ne $null) { AutoLogon >> $LogPath } else{ AutoLogon } }
+    if ( 'UserDirectories' -in $ArrayArgs){ if($LogPath -ne $null) { UserDirectories >> $LogPath } else{ UserDirectories } }
+    if ( 'Cred' -in $ArrayArgs){ if($LogPath -ne $null) { Cred >> $LogPath } else{ Cred } }
+    if ( 'SAMBackupFiles' -in $ArrayArgs){ if($LogPath -ne $null) { SAMBackupFiles >> $LogPath } else{ SAMBackupFiles } }
+    if ( 'RunningProcesses' -in $ArrayArgs){ if($LogPath -ne $null) { RunningProcesses >> $LogPath } else{ RunningProcesses } }
+    if ( 'InstalledSoftwareDir' -in $ArrayArgs) { if($LogPath -ne $null) { InstalledSoftwareDir >> $LogPath } else{ InstalledSoftwareDir } }
+    if ( 'RegSoftware' -in $ArrayArgs){ if($LogPath -ne $null) { RegSoftware >> $LogPath } else{ RegSoftware } }
+    if ( 'UnqServPaths' -in $ArrayArgs){ if($LogPath -ne $null) { UnqServPaths >> $LogPath } else{ UnqServPaths } }
+    if ( 'AlwaysInstallElevated' -in $ArrayArgs){ if($LogPath -ne $null) { AlwaysInstallElevated >> $LogPath } else{ AlwaysInstallElevated } }
+    if ( 'EveryonePermissions' -in $ArrayArgs){ if($LogPath -ne $null) { EveryonePermissions >> $LogPath } else{ EveryonePermissions } }
+    if ( 'BUILTIN' -in $ArrayArgs){ if($LogPath -ne $null) { BUILTIN >> $LogPath } else{ BUILTIN } }
+    if ( 'StartupCommands' -in $ArrayArgs){ if($LogPath -ne $null) { StartupCommands >> $LogPath } else{ StartupCommands } }
+    if ( 'ScheduledTasks' -in $ArrayArgs){ if($LogPath -ne $null) { ScheduledTasks >> $LogPath } else{ ScheduledTasks } }
+    if ( 'TasksFolder' -in $ArrayArgs){ if($LogPath -ne $null) { TasksFolder >> $LogPath } else{ TasksFolder } }
+    if ( 'HotFixes' -in $ArrayArgs){ if($LogPath -ne $null) { HotFixes >> $LogPath } else{ HotFixes } }
+    if ( 'Antivirus' -in $ArrayArgs){ if($LogPath -ne $null) { Antivirus >> $LogPath } else{ Antivirus } }
+    if ( 'PathCheck' -in $ArrayArgs){ if($LogPath -ne $null) { PathCheck >> $LogPath } else{ PathCheck } }
+    if ( 'FindSpooler' -in $ArrayArgs){ if($LogPath -ne $null) { FindSpooler >> $LogPath } else{ FindSpooler } }
 }
 
 if($ArrayArgs.Count -eq 0){
+    $NeedDelay = Read-Host "Do you need a delay between function execution? (By default NO)"
+    switch -wildcard ($NeedDelay){
+        'y*'    { $ReadSleep = Read-Host "The delay time between the execution of functions?" }
+        'n*'    { $ReadSleep = [int]0 }
+        Default { $ReadSleep = [int]0 }
+    }
+    $Sleep = [int]$ReadSleep
+
+    $NeedDelayInBlock = Read-Host "Do you need a delay between the execution of parts of functions? (By default NO)"
+    switch -wildcard ($NeedDelayInBlock){
+        'y*'    { $ReadSleepInBlock = Read-Host "The delay time between the execution of parts of functions?" }
+        'n*'    { $ReadSleepInBlock = [int]0 }
+        Default { $ReadSleepInBlock = [int]0 }
+    }
+    $SleepInBlock = [int]$ReadSleepInBlock
+
+    $Output = Read-Host "To output to the console or to a file? (By default to the console)"
+    switch -wildcard ($Output) {
+        '*f*'   { $ReadPath = Read-Host "Enter the file name .txt" }
+        '*c*'   { }
+        Default { }
+    }
+    $LogPath = $ReadPath
+
+
     $NewArrayArgs = [System.Collections.ArrayList]::new()
+    
     $AllArgs = @('', 'all [2 - 8]', 'Info [9 - 18]', 'Network [19 - 21]', 'Users [22 - 31]', 
                  'Software [32 - 34]', 'FPermissions [35 - 37]', 'Tasks [38 - 40]', 'Other [41 - 45]', 
                  'CheckAdmin', 'SysInfo', 'MountedDisks', 'SystemDate', 'NETVersion', 
@@ -711,196 +703,165 @@ if($ArrayArgs.Count -eq 0){
     if('all [2 - 8]' -in $NewArrayArgs){
         Write-Host "The program is running in full test mode, all tests will be performed"
 
-        CheckAdmin
-        SysInfo
-        MountedDisks
-        SystemDate
-        NETVersion
-        PSVersion
-        SystemRole
-        ProxyDetect
-        AuditSettings
-        EnvVariables
+        if($LogPath -ne $null) { CheckAdmin >> $LogPath } else{ CheckAdmin }
+        if($LogPath -ne $null) { SysInfo >> $LogPath } else{ SysInfo }
+        if($LogPath -ne $null) { MountedDisks >> $LogPath } else{ MountedDisks }
+        if($LogPath -ne $null) { SystemDate >> $LogPath } else{ SystemDate }
+        if($LogPath -ne $null) { NETVersion >> $LogPath } else{ NETVersion }
+        if($LogPath -ne $null) { PSVersion >> $LogPath } else{ PSVersion }
+        if($LogPath -ne $null) { SystemRole >> $LogPath } else{ SystemRole }
+        if($LogPath -ne $null) { ProxyDetect >> $LogPath } else{ ProxyDetect }
+        if($LogPath -ne $null) { AuditSettings >> $LogPath } else{ AuditSettings }
+        if($LogPath -ne $null) { EnvVariables >> $LogPath } else{ EnvVariables }
 
-        NetInfo
-        DNSinfo
-        Firewall
+        if($LogPath -ne $null) { NetInfo >> $LogPath } else{ NetInfo }
+        if($LogPath -ne $null) { DNSinfo >> $LogPath } else{ DNSinfo }
+        if($LogPath -ne $null) { Firewall >> $LogPath } else{ Firewall }
 
-        LoggedUsers
-        CurrentUser
-        UserPrivileges
-        LocalUsers
-        LocalGroups
-        LocalAdmin
-        AutoLogon
-        UserDirectories
-        Cred
-        SAMBackupFiles
+        if($LogPath -ne $null) { LoggedUsers >> $LogPath } else{ LoggedUsers }
+        if($LogPath -ne $null) { CurrentUser >> $LogPath } else{ CurrentUser }
+        if($LogPath -ne $null) { UserPrivileges >> $LogPath } else{ UserPrivileges }
+        if($LogPath -ne $null) { LocalUsers >> $LogPath } else{ LocalUsers }
+        if($LogPath -ne $null) { LocalGroups >> $LogPath } else{ LocalGroups }
+        if($LogPath -ne $null) { LocalAdmin >> $LogPath } else{ LocalAdmin }
+        if($LogPath -ne $null) { AutoLogon >> $LogPath } else{ AutoLogon }
+        if($LogPath -ne $null) { UserDirectories >> $LogPath } else{ UserDirectories }
+        if($LogPath -ne $null) { Cred >> $LogPath } else{ Cred }
+        if($LogPath -ne $null) { SAMBackupFiles >> $LogPath } else{ SAMBackupFiles }
 
-        RunningProcesses
+        if($LogPath -ne $null) { RunningProcesses >> $LogPath } else{ RunningProcesses }
 
-        InstalledSoftwareDir
-        RegSoftware
-        UnqServPaths
+        if($LogPath -ne $null) { InstalledSoftwareDir >> $LogPath } else{ InstalledSoftwareDir }
+        if($LogPath -ne $null) { RegSoftware >> $LogPath } else{ RegSoftware }
+        if($LogPath -ne $null) { UnqServPaths >> $LogPath } else{ UnqServPaths }
 
-        AlwaysInstallElevated
-        EveryonePermissions
-        BUILTIN
+        if($LogPath -ne $null) { AlwaysInstallElevated >> $LogPath } else{ AlwaysInstallElevated }
+        if($LogPath -ne $null) { EveryonePermissions >> $LogPath } else{ EveryonePermissions }
+        if($LogPath -ne $null) { BUILTIN >> $LogPath } else{ BUILTIN }
 
-        StartupCommands
-        ScheduledTasks
-        TasksFolder
+        if($LogPath -ne $null) { StartupCommands >> $LogPath } else{ StartupCommands }
+        if($LogPath -ne $null) { ScheduledTasks >> $LogPath } else{ ScheduledTasks }
+        if($LogPath -ne $null) { TasksFolder >> $LogPath } else{ TasksFolder }
 
-        HotFixes
-        Antivirus
-        PathCheck
-        FindSpooler
+        if($LogPath -ne $null) { HotFixes >> $LogPath } else{ HotFixes }
+        if($LogPath -ne $null) { Antivirus >> $LogPath } else{ Antivirus }
+        if($LogPath -ne $null) { PathCheck >> $LogPath } else{ PathCheck }
+        if($LogPath -ne $null) { FindSpooler >> $LogPath } else{ FindSpooler }
     }
     else{
         if('Info [9 - 18]' -in $NewArrayArgs){
             Write-Host "[*] System Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-            CheckAdmin
-            SysInfo
-            MountedDisks
-            SystemDate
-            NETVersion
-            PSVersion
-            SystemRole
-            ProxyDetect
-            AuditSettings
+            if($LogPath -ne $null) { CheckAdmin >> $LogPath } else{ CheckAdmin }
+            if($LogPath -ne $null) { SysInfo >> $LogPath } else{ SysInfo }
+            if($LogPath -ne $null) { MountedDisks >> $LogPath } else{ MountedDisks }
+            if($LogPath -ne $null) { SystemDate >> $LogPath } else{ SystemDate }
+            if($LogPath -ne $null) { NETVersion >> $LogPath } else{ NETVersion }
+            if($LogPath -ne $null) { PSVersion >> $LogPath } else{ PSVersion }
+            if($LogPath -ne $null) { SystemRole >> $LogPath } else{ SystemRole }
+            if($LogPath -ne $null) { ProxyDetect >> $LogPath } else{ ProxyDetect }
+            if($LogPath -ne $null) { AuditSettings >> $LogPath } else{ AuditSettings }
+            if($LogPath -ne $null) { EnvVariables >> $LogPath } else{ EnvVariables }
         }
         
         if('Network [19 - 21]' -in $NewArrayArgs){
             Write-Host "[*] Network Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-            NetInfo
-            DNSinfo
-            Firewall
+            if($LogPath -ne $null) { NetInfo >> $LogPath } else{ NetInfo }
+            if($LogPath -ne $null) { DNSinfo >> $LogPath } else{ DNSinfo }
+            if($LogPath -ne $null) { Firewall >> $LogPath } else{ Firewall }
         }
         
         if('Users [22 - 31]' -in $NewArrayArgs){
         Write-Host "[*] Users Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-        LoggedUsers
-        CurrentUser
-        UserPrivileges
-        LocalUsers
-        LocalGroups
-        LocalAdmin
-        AutoLogon
-        UserDirectories
-        Cred
-        SAMBackupFiles
+        if($LogPath -ne $null) { LoggedUsers >> $LogPath } else{ LoggedUsers }
+        if($LogPath -ne $null) { CurrentUser >> $LogPath } else{ CurrentUser }
+        if($LogPath -ne $null) { UserPrivileges >> $LogPath } else{ UserPrivileges }
+        if($LogPath -ne $null) { LocalUsers >> $LogPath } else{ LocalUsers }
+        if($LogPath -ne $null) { LocalGroups >> $LogPath } else{ LocalGroups }
+        if($LogPath -ne $null) { LocalAdmin >> $LogPath } else{ LocalAdmin }
+        if($LogPath -ne $null) { AutoLogon >> $LogPath } else{ AutoLogon }
+        if($LogPath -ne $null) { UserDirectories >> $LogPath } else{ UserDirectories }
+        if($LogPath -ne $null) { Cred >> $LogPath } else{ Cred }
+        if($LogPath -ne $null) { SAMBackupFiles >> $LogPath } else{ SAMBackupFiles }
         }
         
         if('Software [32 - 34]' -in $NewArrayArgs){
         Write-Host "[*] Software Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-        InstalledSoftwareDir
-        RegSoftware
-        UnqServPaths
+        if($LogPath -ne $null) { InstalledSoftwareDir >> $LogPath } else{ InstalledSoftwareDir }
+        if($LogPath -ne $null) { RegSoftware >> $LogPath } else{ RegSoftware }
+        if($LogPath -ne $null) { UnqServPaths >> $LogPath } else{ UnqServPaths }
         }
         
         if('FPermissions [35 - 37]' -in $NewArrayArgs){
             Write-Host "[*] Forgotten Permissions Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-            AlwaysInstallElevated
-            EveryonePermissions
-            BUILTIN
+            if($LogPath -ne $null) { AlwaysInstallElevated >> $LogPath } else{ AlwaysInstallElevated }
+            if($LogPath -ne $null) { EveryonePermissions >> $LogPath } else{ EveryonePermissions }
+            if($LogPath -ne $null) { BUILTIN >> $LogPath } else{ BUILTIN }
         }
         
         if('Tasks [38 - 40]' -in $NewArrayArgs){
         Write-Host "[*] Tasks Information:`n`n" -ForegroundColor black -BackgroundColor white
 
-        StartupCommands
-        ScheduledTasks
-        TasksFolder
+        if($LogPath -ne $null) { StartupCommands >> $LogPath } else{ StartupCommands }
+        if($LogPath -ne $null) { ScheduledTasks >> $LogPath } else{ ScheduledTasks }
+        if($LogPath -ne $null) { TasksFolder >> $LogPath } else{ TasksFolder }
         }
         
         if('Other [41 - 45]' -in $NewArrayArgs){
-            RunningProcesses
-            HotFixes
-            Antivirus
-            PathCheck
-            FindSpooler
+
+            if( 'RunningProcesses' -in $NewArrayArgs ){ RunningProcesses }
+            if( 'HotFixes' -in $NewArrayArgs ){ HotFixes }
+            if( 'Antivirus' -in $NewArrayArgs ){ Antivirus }
+            if( 'PathCheck' -in $NewArrayArgs ){ PathCheck }
+            if( 'FindSpooler' -in $NewArrayArgs ){ FindSpooler }
+
         }
         
-        if( 'CheckAdmin' -in $NewArrayArgs ){ CheckAdmin }
-
-        if( 'SysInfo' -in $NewArrayArgs ){ SysInfo }
-        
-        if( 'MountedDisks' -in $NewArrayArgs ){ MountedDisks }
-        
-        if( 'SystemDate' -in $NewArrayArgs ){ SystemDate }
-        
-        if( 'NETVersion' -in $NewArrayArgs ){ NETVersion }
-        
-        if( 'PSVersion' -in $NewArrayArgs ){ PSVersion }
-        
-        if( 'SystemRole' -in $NewArrayArgs ){ SystemRole }
-        
-        if( 'ProxyDetect' -in $NewArrayArgs ){ ProxyDetect }
-        
-        if( 'AuditSettings' -in $NewArrayArgs ){ AuditSettings }
-        
-        if( 'EnvVariables' -in $NewArrayArgs ){ EnvVariables }
-        
-        if( 'NetInfo' -in $NewArrayArgs ){ NetInfo }
-        
-        if( 'DNSinfo' -in $NewArrayArgs ){ DNSinfo }
-        
-        if( 'Firewall' -in $NewArrayArgs ){ Firewall }
-        
-        if( 'LoggedUsers' -in $NewArrayArgs ){ LoggedUsers }
-        
-        if( 'CurrentUser' -in $NewArrayArgs ){ CurrentUser }
-        
-        if( 'UserPrivileges' -in $NewArrayArgs ){ UserPrivileges }
-        
-        if( 'LocalUsers' -in $NewArrayArgs ){ LocalUsers }
-        
-        if( 'LocalGroups' -in $NewArrayArgs ){ LocalGroups }
-        
-        if( 'LocalAdmin' -in $NewArrayArgs ){ LocalAdmin }
-        
-        if( 'AutoLogon' -in $NewArrayArgs ){ AutoLogon }
-        
-        if( 'UserDirectories' -in $NewArrayArgs ){ UserDirectories }
-        
-        if( 'Cred' -in $NewArrayArgs ){ Cred }
-        
-        if( 'SAMBackupFiles' -in $NewArrayArgs ){ SAMBackupFiles }
-        
-        if( 'RunningProcesses' -in $NewArrayArgs ){ RunningProcesses }
-        
-        if( 'InstalledSoftwareDir' -in $NewArrayArgs ){ InstalledSoftwareDir }
-        
-        if( 'RegSoftware' -in $NewArrayArgs ){ RegSoftware }
-        
-        if( 'UnqServPaths' -in $NewArrayArgs ){ UnqServPaths }
-        
-        if( 'AlwaysInstallElevated' -in $NewArrayArgs ){ AlwaysInstallElevated }
-        
-        if( 'EveryonePermissions' -in $NewArrayArgs ){ EveryonePermissions }
-        
-        if( 'BUILTIN' -in $NewArrayArgs ){ BUILTIN }
-        
-        if( 'StartupCommands' -in $NewArrayArgs ){ StartupCommands }
-        
-        if( 'ScheduledTasks' -in $NewArrayArgs ){ ScheduledTasks }
-        
-        if( 'TasksFolder' -in $NewArrayArgs ){ TasksFolder }
-        
-        if( 'HotFixes' -in $NewArrayArgs ){ HotFixes }
-        
-        if( 'Antivirus' -in $NewArrayArgs ){ Antivirus }
-        
-        if( 'PathCheck' -in $NewArrayArgs ){ PathCheck }
-        
-        if( 'FindSpooler' -in $NewArrayArgs ){ FindSpooler }    
+        if ( 'CheckAdmin' -in $NewArrayArgs){ if($LogPath -ne $null) { CheckAdmin >> $LogPath } else{ CheckAdmin } }
+        if ( 'SysInfo' -in $NewArrayArgs){ if($LogPath -ne $null) { SysInfo >> $LogPath } else{ SysInfo } }
+        if ( 'MountedDisks' -in $NewArrayArgs){ if($LogPath -ne $null) { MountedDisks >> $LogPath } else{ MountedDisks } }
+        if ( 'SystemDate' -in $NewArrayArgs){ if($LogPath -ne $null) { SystemDate >> $LogPath } else{ SystemDate } }
+        if ( 'NETVersion' -in $NewArrayArgs){ if($LogPath -ne $null) { NETVersion >> $LogPath } else{ NETVersion } }
+        if ( 'PSVersion' -in $NewArrayArgs){ if($LogPath -ne $null) { PSVersion >> $LogPath } else{ PSVersion } }
+        if ( 'SystemRole' -in $NewArrayArgs){ if($LogPath -ne $null) { SystemRole >> $LogPath } else{ SystemRole } }
+        if ( 'ProxyDetect' -in $NewArrayArgs){ if($LogPath -ne $null) { ProxyDetect >> $LogPath } else{ ProxyDetect } }
+        if ( 'AuditSettings' -in $NewArrayArgs){ if($LogPath -ne $null) { AuditSettings >> $LogPath } else{ AuditSettings } }
+        if ( 'EnvVariables' -in $NewArrayArgs){ if($LogPath -ne $null) { EnvVariables >> $LogPath } else{ EnvVariables } }
+        if ( 'NetInfo' -in $NewArrayArgs){ if($LogPath -ne $null) { NetInfo >> $LogPath } else{ NetInfo } }
+        if ( 'DNSinfo' -in $NewArrayArgs){ if($LogPath -ne $null) { DNSinfo >> $LogPath } else{ DNSinfo } }
+        if ( 'Firewall' -in $NewArrayArgs){ if($LogPath -ne $null) { Firewall >> $LogPath } else{ Firewall } }
+        if ( 'LoggedUsers' -in $NewArrayArgs){ if($LogPath -ne $null) { LoggedUsers >> $LogPath } else{ LoggedUsers } }
+        if ( 'CurrentUser' -in $NewArrayArgs){ if($LogPath -ne $null) { CurrentUser >> $LogPath } else{ CurrentUser } }
+        if ( 'UserPrivileges' -in $NewArrayArgs){ if($LogPath -ne $null) { UserPrivileges >> $LogPath } else{ UserPrivileges } }
+        if ( 'LocalUsers' -in $NewArrayArgs){ if($LogPath -ne $null) { LocalUsers >> $LogPath } else{ LocalUsers } }
+        if ( 'LocalGroups' -in $NewArrayArgs){ if($LogPath -ne $null) { LocalGroups >> $LogPath } else{ LocalGroups } }
+        if ( 'LocalAdmin' -in $NewArrayArgs){ if($LogPath -ne $null) { LocalAdmin >> $LogPath } else{ LocalAdmin } }
+        if ( 'AutoLogon' -in $NewArrayArgs){ if($LogPath -ne $null) { AutoLogon >> $LogPath } else{ AutoLogon } }
+        if ( 'UserDirectories' -in $NewArrayArgs){ if($LogPath -ne $null) { UserDirectories >> $LogPath } else{ UserDirectories } }
+        if ( 'Cred' -in $NewArrayArgs){ if($LogPath -ne $null) { Cred >> $LogPath } else{ Cred } }
+        if ( 'SAMBackupFiles' -in $NewArrayArgs){ if($LogPath -ne $null) { SAMBackupFiles >> $LogPath } else{ SAMBackupFiles } }
+        if ( 'RunningProcesses' -in $NewArrayArgs){ if($LogPath -ne $null) { RunningProcesses >> $LogPath } else{ RunningProcesses } }
+        if ( 'InstalledSoftwareDir' -in $NewArrayArgs) { if($LogPath -ne $null) { InstalledSoftwareDir >> $LogPath } else{ InstalledSoftwareDir } }
+        if ( 'RegSoftware' -in $NewArrayArgs){ if($LogPath -ne $null) { RegSoftware >> $LogPath } else{ RegSoftware } }
+        if ( 'UnqServPaths' -in $NewArrayArgs){ if($LogPath -ne $null) { UnqServPaths >> $LogPath } else{ UnqServPaths } }
+        if ( 'AlwaysInstallElevated' -in $NewArrayArgs){ if($LogPath -ne $null) { AlwaysInstallElevated >> $LogPath } else{ AlwaysInstallElevated } }
+        if ( 'EveryonePermissions' -in $NewArrayArgs){ if($LogPath -ne $null) { EveryonePermissions >> $LogPath } else{ EveryonePermissions } }
+        if ( 'BUILTIN' -in $NewArrayArgs){ if($LogPath -ne $null) { BUILTIN >> $LogPath } else{ BUILTIN } }
+        if ( 'StartupCommands' -in $NewArrayArgs){ if($LogPath -ne $null) { StartupCommands >> $LogPath } else{ StartupCommands } }
+        if ( 'ScheduledTasks' -in $NewArrayArgs){ if($LogPath -ne $null) { ScheduledTasks >> $LogPath } else{ ScheduledTasks } }
+        if ( 'TasksFolder' -in $NewArrayArgs){ if($LogPath -ne $null) { TasksFolder >> $LogPath } else{ TasksFolder } }
+        if ( 'HotFixes' -in $NewArrayArgs){ if($LogPath -ne $null) { HotFixes >> $LogPath } else{ HotFixes } }
+        if ( 'Antivirus' -in $NewArrayArgs){ if($LogPath -ne $null) { Antivirus >> $LogPath } else{ Antivirus } }
+        if ( 'PathCheck' -in $NewArrayArgs){ if($LogPath -ne $null) { PathCheck >> $LogPath } else{ PathCheck } }
+        if ( 'FindSpooler' -in $NewArrayArgs){ if($LogPath -ne $null) { FindSpooler >> $LogPath } else{ FindSpooler } }   
     }
-}
+    }
 
-Write-Host "`t[?] Finish" -ForegroundColor black -BackgroundColor white
-sleep 5
+Write-Output "`t[?] Finish" -ForegroundColor black -BackgroundColor white >> $LogPath
+Start-Sleep $Sleep
+Read-Host
+EXIT
